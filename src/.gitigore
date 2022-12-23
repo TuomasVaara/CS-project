@@ -1,0 +1,10 @@
+src\db.sqlite3
+.vscode
+.vscode
+.DS_Store
+.coverage
+.pytest_cache
+htmlcov
+__pycache__
+*.py[cod]
+*$py.class
