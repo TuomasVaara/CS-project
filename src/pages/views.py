@@ -22,11 +22,13 @@ def transfer(sender, receiver, amount):
 	acc2.save()
 
 @login_required
+#Tänne muutettiin POST -> GET 
+# JES NYT KAVERIT VOIDAAN RYÖSTÄÄ!!!
 def transferView(request):
-	if request.method == 'POST':
+	if request.method == 'GET':
 		sender = request.user
-		to = User.objects.get(username=request.POST.get('to'))
-		amount = int(request.POST.get('amount'))
+		to = User.objects.get(username=request.GET.get('to'))
+		amount = int(request.GET.get('amount'))
 		transfer(sender,to,amount)
 	return redirect('/')
 
