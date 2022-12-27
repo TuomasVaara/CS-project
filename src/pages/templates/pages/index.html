@@ -36,9 +36,37 @@
             <input type="number" name="amount"/><br/>
 
             <input type="submit" value="Transfer"/>
+
+        
         </form>
-    </body>
+
+        <h2>Messages</h2>
+
+		{% for mail in mails %}
+
+		<i>From {{mail.source.username}} to {{mail.target.username}}</i></br>
+		{{mail.content|safe}}
+		</br>
+		</br>
+
+		{% endfor %}
 
 
+        <h2>Send mail</h2>
+
+        <form action='mail/' method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            To:
+            <select name="to">
+            {% for account in accounts %}
+                <option value="{{account.user.username}}">{{account.user.username}}</option>
+            {% endfor %}
+            </select><br/>
+
+			<textarea name="content" cols="40" rows="5"></textarea><br/>
+            <input type="submit" value="Send"/>
+        </form>
+
     </body>
+   
 </html>
