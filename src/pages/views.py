@@ -8,6 +8,28 @@ from django.db.models import Q
 from .models import Account
 from .models import Mail
 
+#Fix to flaw 4:
+#def transfer(sender, receiver, amount):
+#with transaction.atomic():
+#	if sender == receiver:
+#		pass
+#	acc1 = Account.objects.get(user=sender)
+#	acc2 = Account.objects.get(user=receiver)
+#	if acc1.balance >= amount and amount > 0:
+#			acc1.balance -= amount
+#			acc2.balance += amount
+#acc1.save()
+#acc2.save()
+
+#def transferView(request):
+#	if request.method == 'POST':
+#		sender = request.user
+#		to = User.objects.get(username=request.POST.get('to'))
+#		amount = int(request.POST.get('amount'))
+#		transfer(sender,to,amount)
+#	return redirect('/')
+
+
 def transfer(sender, receiver, amount):
 	with transaction.atomic():
 		
