@@ -14,5 +14,5 @@ poetry install
 Safety to check for vulnerabilities in packages
 
 ```bash
-poetry run safety-check
+poetry run safety check
 ```
