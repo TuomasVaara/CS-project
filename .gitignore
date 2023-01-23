@@ -9,3 +9,4 @@ src/__pycache__
 *$py.class
 .DS_Store
 .vscode
+src/db.sqlite3

@@ -6,6 +6,8 @@
 
 
     <body>
+        
+
 		<h1>Your account</h1>
 
         <table>
@@ -62,7 +64,7 @@
         <h2>Messages</h2>
 
 		{% for mail in mails %}
-
+        
 		<i>From {{mail.source.username}} to {{mail.target.username}}</i></br>
 		{{mail.content|safe}}
 		</br>
@@ -82,9 +84,12 @@
             {% endfor %}
             </select><br/>
 
-			<textarea name="content" cols="40" rows="5"></textarea><br/>
-            <input type="submit" value="Send"/>
+			<textarea name="content" id="textId" cols="40" rows="5"></textarea><br/>
+            <input type="submit" value="Send">
+    
         </form>
+
+        
 
     </body>
    

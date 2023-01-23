@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.db.models import Q
+from django.utils.encoding import escape_uri_path
 from .models import Account
 from .models import Mail
 
@@ -24,6 +25,15 @@ from .models import Mail
 #def transferView(request):
 #	if request.method == 'POST':
 #		sender = request.user
+#		to = User.objects.get(username=request.POST.get('to'))
+#		amount = int(request.POST.get('amount'))
+#		transfer(sender,to,amount)
+#	return redirect('/')
+
+#Fix to flaw 1:
+#def tranferView(request):
+#	if request.method == "POST":
+#   	sender = request.user
 #		to = User.objects.get(username=request.POST.get('to'))
 #		amount = int(request.POST.get('amount'))
 #		transfer(sender,to,amount)
@@ -61,11 +71,13 @@ def transferView(request):
 			print("ERROR")
 			return redirect('/error/')
 	return redirect('/')
-
+#Fix to flaw 2:
+#replace row 79 with content = escape_uri_path(request.POST.get('content'))
 @login_required
 def mailView(request):
 	target = User.objects.get(username=request.POST.get('to'))
-	Mail.objects.create(source=request.user, target=target, content=request.POST.get('content'))
+	content = request.POST.get('content')
+	Mail.objects.create(source=request.user, target=target, content=content)
 	return redirect('/')
 
 def errorView(request):
