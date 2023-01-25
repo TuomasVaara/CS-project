@@ -39,6 +39,16 @@ from .models import Mail
 #		transfer(sender,to,amount)
 #	return redirect('/')
 
+#Fix to flaw 2:
+#replace row 79 with 
+# content = escape_uri_path(request.POST.get('content'))
+#escape_uri_path is builtin function that django provides for sanitizing user input
+
+#Fix to flaw 3:
+#By adding validation and verification to the transferview function so only logged in users can transfer money from their account
+#if sender.id != request.user.id:
+#	 return redirect('/')
+
 
 def transfer(sender, receiver, amount):
 	with transaction.atomic():
@@ -63,16 +73,16 @@ def transfer(sender, receiver, amount):
 def transferView(request):
 	if request.method == 'GET':
 		try:
-			sender = request.user
+			sender = User.objects.get(username=request.GET.get('from'))
 			to = User.objects.get(username=request.GET.get('to'))
 			amount = request.GET.get('amount')
+			
 			transfer(sender,to,amount)
 		except (ValueError,NameError,SyntaxError):
 			print("ERROR")
 			return redirect('/error/')
 	return redirect('/')
-#Fix to flaw 2:
-#replace row 79 with content = escape_uri_path(request.POST.get('content'))
+
 @login_required
 def mailView(request):
 	target = User.objects.get(username=request.POST.get('to'))
