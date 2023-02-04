@@ -9,27 +9,6 @@ from django.utils.encoding import escape_uri_path
 from .models import Account
 from .models import Mail
 
-#Fix to flaw 4:
-#def transfer(sender, receiver, amount):
-#with transaction.atomic():
-#	if sender == receiver:
-#		pass
-#	acc1 = Account.objects.get(user=sender)
-#	acc2 = Account.objects.get(user=receiver)
-#	if acc1.balance >= amount and amount > 0:
-#			acc1.balance -= amount
-#			acc2.balance += amount
-#acc1.save()
-#acc2.save()
-
-#def transferView(request):
-#	if request.method == 'POST':
-#		sender = request.user
-#		to = User.objects.get(username=request.POST.get('to'))
-#		amount = int(request.POST.get('amount'))
-#		transfer(sender,to,amount)
-#	return redirect('/')
-
 #Fix to flaw 1:
 #def tranferView(request):
 #	if request.method == "POST":
@@ -40,12 +19,13 @@ from .models import Mail
 #	return redirect('/')
 
 #Fix to flaw 2:
-#replace row 79 with 
-# content = escape_uri_path(request.POST.get('content'))
+#replace content in mailview with:
+#content = escape_uri_path(request.POST.get('content'))
 #escape_uri_path is builtin function that django provides for sanitizing user input
 
 #Fix to flaw 3:
 #By adding validation and verification to the transferview function so only logged in users can transfer money from their account
+#replace row 79 with 
 #if sender.id != request.user.id:
 #	 return redirect('/')
 
