@@ -25,7 +25,7 @@ from .models import Mail
 
 #Fix to flaw 3:
 #By adding validation and verification to the transferview function so only logged in users can transfer money from their account
-#replace row 79 with 
+#replace row 59 with 
 #if sender.id != request.user.id:
 #	 return redirect('/')
 
