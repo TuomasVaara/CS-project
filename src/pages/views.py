@@ -28,14 +28,19 @@ from .models import Mail
 #replace row 59 with 
 #if sender.id != request.user.id:
 #	 return redirect('/')
-
+#Fix to flaw 4:
+#In the transfer functions let's replace eval function.
+#Let's replace rows 46 and 47 with
+# acc1.balance = acc1.balance - amount
+# acc2.balance = acc2.balance + amount
+# and remove rows 49 and 50
 
 def transfer(sender, receiver, amount):
 	with transaction.atomic():
 		
 			if sender == receiver:
 				pass
-
+			
 			acc1 = Account.objects.get(user=sender)
 			acc2 = Account.objects.get(user=receiver)
 			one = (f"{acc1.balance} - {amount}")
@@ -58,7 +63,7 @@ def transferView(request):
 			amount = request.GET.get('amount')
 			
 			transfer(sender,to,amount)
-		except (ValueError,NameError,SyntaxError):
+		except :
 			print("ERROR")
 			return redirect('/error/')
 	return redirect('/')
