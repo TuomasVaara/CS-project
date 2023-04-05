@@ -31,8 +31,8 @@ from .models import Mail
 #Fix to flaw 4:
 #In the transfer functions let's replace eval function.
 #Let's replace rows 46 and 47 with
-# acc1.balance = acc1.balance - amount
-# acc2.balance = acc2.balance + amount
+# acc1.balance -= int(amount)
+# acc2.balance += int(amount)
 # and remove rows 49 and 50
 
 def transfer(sender, receiver, amount):
@@ -45,10 +45,10 @@ def transfer(sender, receiver, amount):
 			acc2 = Account.objects.get(user=receiver)
 			one = (f"{acc1.balance} - {amount}")
 			two = (f"{acc2.balance} + {amount}")
-
+			
 			acc1.balance = eval(one)
 			acc2.balance = eval(two)
-		
+
 	acc1.save()
 	acc2.save()
 	
